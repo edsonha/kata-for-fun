@@ -1,37 +1,44 @@
 # kata-for-fun
 
-For people who have nothing better to do
+Practice Test Driven Development (TDD) on katas, data structure and algorithm.
 
-This is not course material and has nothing related to the course.
+### Data structure:
 
-### Suggested path for data structure.
+Not completed:
 
 1. queue
 2. stack
-3. fixedLengthQueue
+3. fixed length queue
 4. circular queue
-5. linkedList
+5. linked list
 
-### suggested path for algorithm
+### Algorithm
+
+Not completed:
 
 1. binary search
+2. bubble sort
 
-## Setup
+### Kata
+
+Not completed:
+
+1. mummifier (change a "vowel" in a word into "mummy")
+
+## Start the app
 
 ```
   npm install
 ```
 
-## Run
-
-example for running test for Queue only,
+## Run test
 
 ```
-   npx jest --testNamePattern="Queue"
+  npm run test:watch
 ```
 
-if name pattern crashes, you can use in file path
+## Run test coverage
 
 ```
- npx jest dataStructure/queue/queue.test.js
+  npm run test:coverage
 ```
