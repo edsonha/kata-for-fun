@@ -2,7 +2,7 @@
 
 https://en.wikipedia.org/wiki/Queue_(abstract_data_type)
 
-## Instuctions
+## Instructions
 
 Implement a queue with 3 function.
 

@@ -1,30 +1,54 @@
-const Queue = require('./queue');
+const Queue = require("./queue");
 
-describe('Queue', () => {
-  it('can enqueue and dequeue an element', () => {
-    const queue = new Queue();
-    queue.enqueue('apple');
-    expect(queue.dequeue()).toEqual('apple');
-    expect(queue.dequeue()).toEqual(undefined);
+describe("Queue", () => {
+  describe("enqueue", () => {
+    it("should add person into the queue", () => {
+      const queue = new Queue();
+      expect(queue.enqueue("Alice")).toEqual(["Alice"]);
+    });
+
+    it("should add person into the queue in order", () => {
+      const queue = new Queue();
+      expect(queue.enqueue("Alice")).toEqual(["Alice"]);
+      expect(queue.enqueue("Bob")).toEqual(["Alice", "Bob"]);
+      expect(queue.enqueue("Charlie")).toEqual(["Alice", "Bob", "Charlie"]);
+    });
   });
 
-  it('maintains the order when enqueue and dequeue elements', () => {
-    const queue = new Queue();
-    queue.enqueue('apple');
-    queue.enqueue('banana');
-    queue.enqueue('citrus');
-    expect(queue.dequeue()).toEqual('apple');
-    expect(queue.dequeue()).toEqual('banana');
-    expect(queue.dequeue()).toEqual('citrus');
-    expect(queue.dequeue()).toEqual(undefined);
+  describe("dequeue", () => {
+    it("should enqueue and dequeue a person", () => {
+      const queue = new Queue();
+      expect(queue.enqueue("Alice")).toEqual(["Alice"]);
+      expect(queue.dequeue()).toEqual("Alice");
+      expect(queue.dequeue()).toEqual(undefined);
+    });
+
+    it("should enqueue and dequeue and maintain the order", () => {
+      const queue = new Queue();
+      queue.enqueue("Alice");
+      queue.enqueue("Bob");
+      queue.enqueue("Charlie");
+      expect(queue.dequeue()).toEqual("Alice");
+      expect(queue.dequeue()).toEqual("Bob");
+      expect(queue.dequeue()).toEqual("Charlie");
+      expect(queue.dequeue()).toEqual(undefined);
+    });
   });
 
-  it('can peek at the next item', () => {
-    const queue = new Queue();
-    expect(queue.peek()).toBeUndefined();
-    queue.enqueue('apple');
-    expect(queue.peek()).toEqual('apple');
-    queue.enqueue('banana');
-    expect(queue.peek()).toEqual('apple');
+  describe("peek", () => {
+    it("should return the first item in the queue", () => {
+      const queue = new Queue();
+      queue.enqueue("Alice");
+      expect(queue.peek()).toEqual("Alice");
+    });
+
+    it("should not remove the first item in the queue", () => {
+      const queue = new Queue();
+      expect(queue.peek()).toBeUndefined();
+      queue.enqueue("Alice");
+      expect(queue.peek()).toEqual("Alice");
+      queue.enqueue("Bob");
+      expect(queue.peek()).toEqual("Alice");
+    });
   });
 });

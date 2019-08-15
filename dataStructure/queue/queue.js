@@ -1,8 +1,3 @@
-/**
- * Implement class Queue
- *
- */
-
 module.exports = class Queue {
   constructor() {
     this.queue = [];
@@ -10,6 +5,7 @@ module.exports = class Queue {
 
   enqueue(item) {
     this.queue.push(item);
+    return this.queue;
   }
 
   dequeue() {
