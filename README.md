@@ -7,9 +7,10 @@ Practice Test Driven Development (TDD) on katas, data structure and algorithm.
 - queue
 - stack
 - fixed length queue
+- circular queue
+
   Not completed:
 
-- circular queue
 - linked list
 
 ### Algorithm
@@ -24,6 +25,12 @@ Not completed:
 Not completed:
 
 - mummifier (change a "vowel" in a word into "mummy")
+
+### React
+
+Not completed:
+
+- array-performance
 
 ## Start the app
 
