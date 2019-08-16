@@ -19,17 +19,17 @@ describe("Stack", () => {
     it("should push an item and pop an item", () => {
       const stack = new Stack();
       stack.push("Alice");
-      expect(stack.pop()).toEqual("Alice");
-      expect(stack.pop()).toEqual(undefined);
+      expect(stack.pop()).toBe("Alice");
+      expect(stack.pop()).toBe(undefined);
     });
 
     it("should pop the last item in order", () => {
       const stack = new Stack();
       stack.push("Alice");
       stack.push("Bob");
-      expect(stack.pop()).toEqual("Bob");
-      expect(stack.pop()).toEqual("Alice");
-      expect(stack.pop()).toEqual(undefined);
+      expect(stack.pop()).toBe("Bob");
+      expect(stack.pop()).toBe("Alice");
+      expect(stack.pop()).toBe(undefined);
     });
   });
 
@@ -38,7 +38,7 @@ describe("Stack", () => {
       const stack = new Stack();
       stack.push("Alice");
       stack.push("Bob");
-      expect(stack.peek()).toEqual("Bob");
+      expect(stack.peek()).toBe("Bob");
     });
 
     it("should ", () => {});
@@ -48,10 +48,10 @@ describe("Stack", () => {
     const stack = new Stack();
     expect(stack.peek()).toBeUndefined();
     stack.push("Alice");
-    expect(stack.peek()).toEqual("Alice");
+    expect(stack.peek()).toBe("Alice");
     stack.push("Bob");
-    expect(stack.peek()).toEqual("Bob");
+    expect(stack.peek()).toBe("Bob");
     stack.pop();
-    expect(stack.peek()).toEqual("Alice");
+    expect(stack.peek()).toBe("Alice");
   });
 });
