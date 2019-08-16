@@ -2,7 +2,7 @@
 
 https://en.wikipedia.org/wiki/Stack_(abstract_data_type)
 
-## Instuctions
+## Instructions
 
 Implement a stack with 3 function.
 

@@ -5,6 +5,7 @@ module.exports = class Stack {
 
   push(item) {
     this.stack.push(item);
+    return this.stack;
   }
 
   pop() {
