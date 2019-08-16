@@ -19,8 +19,8 @@ describe("Queue", () => {
     it("should enqueue and dequeue a person", () => {
       const queue = new Queue();
       expect(queue.enqueue("Alice")).toEqual(["Alice"]);
-      expect(queue.dequeue()).toEqual("Alice");
-      expect(queue.dequeue()).toEqual(undefined);
+      expect(queue.dequeue()).toBe("Alice");
+      expect(queue.dequeue()).toBe(undefined);
     });
 
     it("should enqueue and dequeue and maintain the order", () => {
@@ -28,10 +28,10 @@ describe("Queue", () => {
       queue.enqueue("Alice");
       queue.enqueue("Bob");
       queue.enqueue("Charlie");
-      expect(queue.dequeue()).toEqual("Alice");
-      expect(queue.dequeue()).toEqual("Bob");
-      expect(queue.dequeue()).toEqual("Charlie");
-      expect(queue.dequeue()).toEqual(undefined);
+      expect(queue.dequeue()).toBe("Alice");
+      expect(queue.dequeue()).toBe("Bob");
+      expect(queue.dequeue()).toBe("Charlie");
+      expect(queue.dequeue()).toBe(undefined);
     });
   });
 
@@ -39,16 +39,16 @@ describe("Queue", () => {
     it("should return the first item in the queue", () => {
       const queue = new Queue();
       queue.enqueue("Alice");
-      expect(queue.peek()).toEqual("Alice");
+      expect(queue.peek()).toBe("Alice");
     });
 
     it("should not remove the first item in the queue", () => {
       const queue = new Queue();
       expect(queue.peek()).toBeUndefined();
       queue.enqueue("Alice");
-      expect(queue.peek()).toEqual("Alice");
+      expect(queue.peek()).toBe("Alice");
       queue.enqueue("Bob");
-      expect(queue.peek()).toEqual("Alice");
+      expect(queue.peek()).toBe("Alice");
     });
   });
 });
