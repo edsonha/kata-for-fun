@@ -22,8 +22,6 @@ Not completed:
 
 ### Kata
 
-Not completed:
-
 - mummifier (change a "vowel" in a word into "mummy")
 
 ### React
