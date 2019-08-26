@@ -23,6 +23,7 @@ Not completed:
 ### Kata
 
 - mummifier (change a "vowel" in a word into "mummy")
+- flatten (flatten multiple nested array into one single non-nested array)
 
 ### React
 
