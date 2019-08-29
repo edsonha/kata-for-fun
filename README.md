@@ -24,6 +24,7 @@ Not completed:
 
 - mummifier (change a "vowel" in a word into "mummy")
 - flatten (flatten multiple nested array into one single non-nested array)
+- tennis (mimic the scoring system of a tennis game)
 - kata collection
 
 ### React
