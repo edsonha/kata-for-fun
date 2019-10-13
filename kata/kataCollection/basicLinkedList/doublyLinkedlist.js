@@ -2,10 +2,11 @@ class Node {
   constructor(value) {
     this.value = value;
     this.next = null;
+    this.prev = null;
   }
 }
 
-class LinkedList {
+class DoublyLinkedList {
   constructor(value) {
     let newNode = new Node(value);
     this.head = newNode;
@@ -15,6 +16,7 @@ class LinkedList {
 
   append(value) {
     let newNode = new Node(value);
+    newNode.prev = this.tail;
     this.tail.next = newNode;
     this.tail = newNode;
     this.length++;
@@ -24,6 +26,7 @@ class LinkedList {
   prepend(value) {
     let newNode = new Node(value);
     newNode.next = this.head;
+    this.head.prev = newNode;
     this.head = newNode;
     this.length++;
     return this;
@@ -37,8 +40,10 @@ class LinkedList {
     let newNode = new Node(value);
     const nodeBeforeInsertion = this.traverseToIndex(index - 1);
     const nodeAfterInsertion = nodeBeforeInsertion.next;
-    newNode.next = nodeAfterInsertion;
     nodeBeforeInsertion.next = newNode;
+    newNode.next = nodeAfterInsertion;
+    newNode.prev = nodeBeforeInsertion;
+    nodeAfterInsertion.prev = newNode;
     this.length++;
     return this;
   }
@@ -46,7 +51,9 @@ class LinkedList {
   delete(index) {
     const nodeBeforeDeletion = this.traverseToIndex(index - 1);
     const nodeToDelete = nodeBeforeDeletion.next;
-    nodeBeforeDeletion.next = nodeToDelete.next;
+    const nodeAfterDeletion = nodeToDelete.next;
+    nodeBeforeDeletion.next = nodeAfterDeletion;
+    nodeAfterDeletion.prev = nodeBeforeDeletion;
     this.length--;
     return this;
   }
@@ -72,7 +79,7 @@ class LinkedList {
   }
 }
 
-let myLinkedList = new LinkedList(2);
+let myLinkedList = new DoublyLinkedList(2);
 myLinkedList.append(4);
 myLinkedList.append(5);
 myLinkedList.prepend(1);

@@ -27,12 +27,6 @@ Not completed:
 - tennis (mimic the scoring system of a tennis game)
 - kata collection
 
-### React
-
-Not completed:
-
-- array-performance
-
 ## Start the app
 
 ```
