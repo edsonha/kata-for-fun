@@ -51,6 +51,25 @@ class LinkedList {
     return this;
   }
 
+  reverse() {
+    if (!this.head.next) {
+      return this.head;
+    }
+    let firstNode = this.head;
+    this.tail = this.head;
+    let secondNode = firstNode.next;
+    while (secondNode) {
+      //while secondNode is not null
+      let thirdNode = secondNode.next;
+      secondNode.next = firstNode;
+      firstNode = secondNode;
+      secondNode = thirdNode;
+    }
+    this.head.next = null;
+    this.head = firstNode;
+    return this;
+  }
+
   traverseToIndex(index) {
     let counter = 0;
     let currentNode = this.head;
@@ -79,4 +98,6 @@ myLinkedList.prepend(1);
 myLinkedList.insert(2, 3);
 myLinkedList.insert(999, 999);
 myLinkedList.delete(2);
-myLinkedList.printList(); //[1, 2, 4, 5, 999]
+// myLinkedList.printList(); //[1, 2, 4, 5, 999]
+myLinkedList.reverse();
+// myLinkedList.printList; //[999, 5, 4, 2, 1]
