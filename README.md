@@ -15,8 +15,6 @@ Practice Test Driven Development (TDD) on katas, data structure and algorithm.
 
 ### Algorithm
 
-Not completed:
-
 - binary search
 - bubble sort
 
