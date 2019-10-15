@@ -1,16 +1,16 @@
 # LinkedList and Nodes
 
 A Node contains data and a pointer to the next node.
-When there is no next node, the value of next should be null;
+When there is no next node, the value of next should be null.
 
 LinkedList is a chain of nodes, storing the head and each node pointing to the next.
 const list = new LinkedList();
-list.head should contain the first node and null if empty;
-If list.head contains a node. list.head.next should return the next node in the list.
+List.head should contain the first node and null if empty
+If list.head contains a node, list.head.next should return the next node in the list.
 
-## Instuctions
+## Instructions
 
-Implement Node and Linklist.
+Implement Node and LinkedList.
 
 Node
 
