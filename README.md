@@ -9,6 +9,7 @@ Practice Test Driven Development (TDD) on katas, data structure and algorithm.
 - fixed length queue
 - circular queue
 - linked list
+- tree
 
 ### Algorithm
 
