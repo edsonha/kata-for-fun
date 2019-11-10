@@ -17,7 +17,7 @@ const selfDividingNumbers = (left, right) => {
 };
 
 const selfDivide = num => {
-  const arr = num.toString().split("");
+  const arr = [...`${num}`];
   for (let element of arr) {
     if (num % element !== 0) {
       return false;

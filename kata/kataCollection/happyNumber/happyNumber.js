@@ -14,7 +14,7 @@ const happyNumber = num => {
   let result = 0;
   let mySet = new Set();
   while (result !== 1) {
-    const numberArray = num.toString().split("");
+    const numberArray = [...`${num}`];
     num = numberArray.reduce((acc, cur) => acc + Math.pow(cur, 2), 0);
     result = num;
     if (mySet.has(result)) {
