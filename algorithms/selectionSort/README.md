@@ -1,4 +1,4 @@
-# Bubble Sort
+# Selection Sort
 
 - sorting algorithm
 - O(n^2) time complexity
