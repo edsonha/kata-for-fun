@@ -131,6 +131,40 @@ class BinarySearchTree {
       }
     }
   }
+
+  breadthFirstSearch() {
+    let currentNode = this.root;
+    let list = [];
+    let queue = [];
+    queue.push(currentNode);
+    while (queue.length > 0) {
+      currentNode = queue.shift();
+      // console.log(currentNode.value)
+      list.push(currentNode.value);
+      if (currentNode.left) {
+        queue.push(currentNode.left);
+      }
+      if (currentNode.right) {
+        queue.push(currentNode.right);
+      }
+    }
+    return list;
+  }
+
+  breadthFirstSearchRecursive(queue, list) {
+    if (queue.length === 0) {
+      return list;
+    }
+    const currentNode = queue.shift();
+    list.push(currentNode.value);
+    if (currentNode.left) {
+      queue.push(currentNode.left);
+    }
+    if (currentNode.right) {
+      queue.push(currentNode.right);
+    }
+    return this.breadthFirstSearchRecursive(queue, list);
+  }
 }
 
 const tree = new BinarySearchTree();
@@ -141,12 +175,15 @@ tree.insert(20);
 tree.insert(170);
 tree.insert(15);
 tree.insert(1);
-tree.remove(170);
-JSON.stringify(traverse(tree.root));
-//RETURN
+// tree.remove(170);
+// JSON.stringify(traverse(tree.root));
+
 //     9
 //  4     20
-//1  6  15
+//1  6  15  170
+
+console.log("BFS", tree.breadthFirstSearch());
+console.log("BFS Recursive", tree.breadthFirstSearchRecursive([tree.root], []));
 
 //Helper function to better represent tree
 function traverse(node) {
