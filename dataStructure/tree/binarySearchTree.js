@@ -165,6 +165,54 @@ class BinarySearchTree {
     }
     return this.breadthFirstSearchRecursive(queue, list);
   }
+
+  depthFirstSearchInOrder() {
+    return traverseInOrder(this.root, []);
+  }
+
+  depthFirstSearchPreOrder() {
+    return traversePreOrder(this.root, []);
+  }
+
+  depthFirstSearchPostOrder() {
+    return traversePostOrder(this.root, []);
+  }
+}
+
+function traverseInOrder(node, list) {
+  // console.log(node.value)
+  if (node.left) {
+    traverseInOrder(node.left, list);
+  }
+  list.push(node.value);
+  if (node.right) {
+    traverseInOrder(node.right, list);
+  }
+  return list;
+}
+
+function traversePreOrder(node, list) {
+  // console.log(node.value)
+  list.push(node.value);
+  if (node.left) {
+    traversePreOrder(node.left, list);
+  }
+  if (node.right) {
+    traversePreOrder(node.right, list);
+  }
+  return list;
+}
+
+function traversePostOrder(node, list) {
+  // console.log(node.value)
+  if (node.left) {
+    traversePostOrder(node.left, list);
+  }
+  if (node.right) {
+    traversePostOrder(node.right, list);
+  }
+  list.push(node.value);
+  return list;
 }
 
 const tree = new BinarySearchTree();
@@ -182,8 +230,11 @@ tree.insert(1);
 //  4     20
 //1  6  15  170
 
-console.log("BFS", tree.breadthFirstSearch());
-console.log("BFS Recursive", tree.breadthFirstSearchRecursive([tree.root], []));
+console.log("BFS", tree.breadthFirstSearch()); //[9, 4, 20, 1, 6, 15, 170]
+console.log("BFS Recursive", tree.breadthFirstSearchRecursive([tree.root], [])); //[9, 4, 20, 1, 6, 15, 170]
+console.log("DFS In Order", tree.depthFirstSearchInOrder()); //[1, 4, 6, 9, 15, 20, 170]
+console.log("DFS Pre Order", tree.depthFirstSearchPreOrder()); //[9, 4, 1, 6, 20, 15, 170] - Used to recreate binary tree
+console.log("DFS Post Order", tree.depthFirstSearchPostOrder()); //[1, 6, 4, 15, 170, 20, 9] - Used to delete tree
 
 //Helper function to better represent tree
 function traverse(node) {
