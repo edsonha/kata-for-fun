@@ -1,3 +1,4 @@
 const extractResourcePriceData = require("./extractResourcePriceData");
+const extractTranslationData = require("./extractTranslationData");
 
-module.exports = { extractResourcePriceData };
+module.exports = { extractResourcePriceData, extractTranslationData };
