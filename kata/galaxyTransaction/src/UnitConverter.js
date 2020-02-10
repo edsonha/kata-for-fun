@@ -1,7 +1,7 @@
 const {
   ROMAN_NUMERALS,
   ROMAN_NUMERALS_VALIDATOR_REGEX
-} = require("../constants");
+} = require("./constants");
 
 class UnitConverter {
   constructor() {
