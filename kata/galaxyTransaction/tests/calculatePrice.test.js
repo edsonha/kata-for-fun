@@ -1,4 +1,14 @@
 const { calculatePrice } = require("../src/utils");
+const UnitConverter = require("../src/UnitConverter");
+
+jest.mock("../src/UnitConverter");
+
+let mockConverter;
+beforeEach(() => {
+  mockConverter = new UnitConverter();
+  mockConverter.toArabic.mockReturnValueOnce(2);
+  mockConverter.toArabic.mockReturnValueOnce(4);
+});
 
 describe("Calculate Price", () => {
   describe("Irregular input", () => {
@@ -51,11 +61,16 @@ describe("Calculate Price", () => {
       expect(() => calculatePrice([""])).toThrow(errMsg);
     });
 
-    // it("should return an object with item name and price in number", () => {
-    //   expect(calculatePrice(mockData)).toEqual({
-    //     Silver: 17,
-    //     Gold: 14450
-    //   });
-    // });
+    it("should return an object with item name and price in number", () => {
+      expect(calculatePrice(mockData, mockConverter)).toEqual({
+        Silver: 17,
+        Gold: 14450
+      });
+    });
+
+    it("should call converter.toArabic()", () => {
+      calculatePrice(mockData, mockConverter);
+      expect(mockConverter.toArabic).toHaveBeenCalled();
+    });
   });
 });

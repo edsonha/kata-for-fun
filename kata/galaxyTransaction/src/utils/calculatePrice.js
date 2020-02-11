@@ -1,7 +1,4 @@
-const UnitConverter = require("../UnitConverter");
-const converter = new UnitConverter();
-
-const calculatePrice = resourcePriceDataArr => {
+const calculatePrice = (resourcePriceDataArr, converter) => {
   if (!Array.isArray(resourcePriceDataArr)) {
     throw new Error("Calculate Price: Argument is not valid");
   }
@@ -11,8 +8,10 @@ const calculatePrice = resourcePriceDataArr => {
     if (!Array.isArray(data)) {
       throw new Error("Calculate Price: Data is not valid");
     }
-    // const quantity = converter.toArabic(data[0]);
-    // console.log(quantity);
+    const [galaticNum, item, cost] = data;
+    const quantity = converter.toArabic(galaticNum);
+    const itemPrice = cost / quantity;
+    itemPricesObj[item] = itemPrice;
   }
 
   return itemPricesObj;

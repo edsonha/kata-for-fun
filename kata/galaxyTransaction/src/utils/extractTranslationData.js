@@ -9,7 +9,8 @@ const extractTranslationData = translationStatementArr => {
       throw new Error("Extract translation data: Statement is not valid");
     }
     const translationData = statement.split(" is ");
-    unitObjects[translationData[0]] = translationData[1];
+    const [galaticNum, romanNum] = translationData;
+    unitObjects[galaticNum] = romanNum;
   }
 
   return unitObjects;
