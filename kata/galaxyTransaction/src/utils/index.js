@@ -4,6 +4,7 @@ const inputReader = require("./inputReader");
 const splitStatement = require("./splitStatement");
 const extractQueryData = require("./extractQueryData");
 const calculatePrice = require("./calculatePrice");
+const answerQuestion = require("./answerQuestion");
 
 module.exports = {
   extractResourcePriceData,
@@ -11,5 +12,6 @@ module.exports = {
   inputReader,
   splitStatement,
   extractQueryData,
-  calculatePrice
+  calculatePrice,
+  answerQuestion
 };
