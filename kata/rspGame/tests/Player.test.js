@@ -40,6 +40,7 @@ describe("Player", () => {
       expect(() => new Player("Alice", 8)).toThrow(errMsg);
       expect(() => new Player("Alice", "handOptions")).toThrow(errMsg);
       expect(() => new Player("Alice", {})).toThrow(errMsg);
+      expect(() => new Player("Alice", [])).toThrow(errMsg);
       expect(() => new Player("Alice", null)).toThrow(errMsg);
       expect(() => new Player("Alice", true)).toThrow(errMsg);
       expect(() => new Player("Alice", undefined)).toThrow(errMsg);
@@ -69,6 +70,9 @@ describe("Human Player", () => {
         () => new HumanPlayer("Alice", mockHandOptions, "interface")
       ).toThrow(errMsg);
       expect(() => new HumanPlayer("Alice", mockHandOptions, [])).toThrow(
+        errMsg
+      );
+      expect(() => new HumanPlayer("Alice", mockHandOptions, {})).toThrow(
         errMsg
       );
       expect(() => new HumanPlayer("Alice", mockHandOptions, null)).toThrow(

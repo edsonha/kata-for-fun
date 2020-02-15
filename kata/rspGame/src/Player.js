@@ -1,6 +1,10 @@
 class Player {
   constructor(name, handOptions) {
-    if (typeof name !== "string" || !Array.isArray(handOptions)) {
+    if (
+      typeof name !== "string" ||
+      !Array.isArray(handOptions) ||
+      !handOptions.length
+    ) {
       throw new Error("Invalid constructor: Unable to create Player instance");
     }
     this.name = name;
@@ -13,7 +17,8 @@ class HumanPlayer extends Player {
     if (
       typeof chosenInterface !== "object" ||
       !chosenInterface ||
-      Array.isArray(chosenInterface)
+      Array.isArray(chosenInterface) ||
+      Object.entries(chosenInterface).length === 0
     ) {
       throw new Error(
         "Invalid interface: Unable to create Human Player instance"
