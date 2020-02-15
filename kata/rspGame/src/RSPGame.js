@@ -1,3 +1,5 @@
+const isHandOptionInvalid = require("./utils/isHandOptionInvalid");
+
 class RSPGame {
   constructor(player1, player2, winRule) {
     if (
@@ -23,6 +25,9 @@ class RSPGame {
   compareHand(player1Hand, player2Hand) {
     if (typeof player1Hand !== "string" || typeof player2Hand !== "string") {
       throw new Error("Compare Hand method: Invalid inputs");
+    }
+    if (isHandOptionInvalid(player1Hand, player2Hand)) {
+      throw new Error("Compare Hand method: Input is not recognized");
     }
     if (player1Hand === player2Hand) {
       return "Draw";

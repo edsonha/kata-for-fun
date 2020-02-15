@@ -61,6 +61,13 @@ describe("Rock Scissors Paper Game", () => {
         expect(() => humanVsCom.compareHand({}, "rock")).toThrow(errMsg);
       });
 
+      it("should throw error when the input is not recognized", () => {
+        const errMsg = "Compare Hand method: Input is not recognized";
+        expect(() => humanVsCom.compareHand("rock", "water")).toThrow(errMsg);
+        expect(() => humanVsCom.compareHand("water", "paper")).toThrow(errMsg);
+        expect(() => humanVsCom.compareHand("water", "water")).toThrow(errMsg);
+      });
+
       it("should evaluate 2 players' hands and evaluate the winner, loser or draw in human vs computer game", () => {
         expect(humanVsCom.compareHand("rock", "rock")).toBe("Draw");
         expect(humanVsCom.compareHand("paper", "paper")).toBe("Draw");
