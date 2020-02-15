@@ -9,9 +9,24 @@ class Player {
 }
 
 class HumanPlayer extends Player {
-  constructor(name, handOptions) {
+  constructor(name, handOptions, chosenInterface) {
+    if (
+      typeof chosenInterface !== "object" ||
+      !chosenInterface ||
+      Array.isArray(chosenInterface)
+    ) {
+      throw new Error(
+        "Invalid interface: Unable to create Human Player instance"
+      );
+    }
     super(name, handOptions);
     this.playerType = "human";
+    this.humanInterface = chosenInterface;
+  }
+
+  getAction() {
+    const handAction = this.humanInterface.askHandAction();
+    return handAction;
   }
 }
 

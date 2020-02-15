@@ -1,7 +1,12 @@
 const { Player, HumanPlayer, ComPlayer } = require("../src/Player");
+const CLInterface = require("../src/CLInterface");
+
+const mockCLInterface = new CLInterface();
+mockCLInterface.askHandAction = jest.fn();
 
 const mockHandOptions = ["rock", "scissors", "paper"];
-const human = new HumanPlayer("Alice", mockHandOptions);
+
+const human = new HumanPlayer("Alice", mockHandOptions, mockCLInterface);
 const computer = new ComPlayer("Watson", mockHandOptions);
 
 describe("Player", () => {
@@ -50,6 +55,42 @@ describe("Human Player", () => {
       expect(human.name).toBe("Alice");
       expect(human.handOptions).toEqual(mockHandOptions);
       expect(human.playerType).toBe("human");
+      expect(human.humanInterface).toBe(mockCLInterface);
+    });
+
+    it("should not be created when the human interface input is empty or not a Class", () => {
+      const errMsg =
+        "Invalid interface: Unable to create Human Player instance";
+      expect(() => new HumanPlayer("Alice", mockHandOptions)).toThrow(errMsg);
+      expect(() => new HumanPlayer("Alice", mockHandOptions, 8)).toThrow(
+        errMsg
+      );
+      expect(
+        () => new HumanPlayer("Alice", mockHandOptions, "interface")
+      ).toThrow(errMsg);
+      expect(() => new HumanPlayer("Alice", mockHandOptions, [])).toThrow(
+        errMsg
+      );
+      expect(() => new HumanPlayer("Alice", mockHandOptions, null)).toThrow(
+        errMsg
+      );
+      expect(() => new HumanPlayer("Alice", mockHandOptions, true)).toThrow(
+        errMsg
+      );
+      expect(
+        () => new HumanPlayer("Alice", mockHandOptions, undefined)
+      ).toThrow(errMsg);
+    });
+  });
+
+  describe("Get Action", () => {
+    it("should get human hand action based on human interface question", () => {
+      mockCLInterface.askHandAction = jest.fn(() => "rock");
+      expect(human.getAction()).toBe("rock");
+      mockCLInterface.askHandAction = jest.fn(() => "paper");
+      expect(human.getAction()).toBe("paper");
+      mockCLInterface.askHandAction = jest.fn(() => "scissors");
+      expect(human.getAction()).toBe("scissors");
     });
   });
 });
