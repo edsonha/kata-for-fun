@@ -18,8 +18,15 @@ class RSPGame {
     }
     this.player1 = player1;
     this.player2 = player2;
+    this.player1Hand = "";
+    this.player2Hand = "";
     this.winRule = winRule;
     this.result = "";
+  }
+
+  playGame() {
+    this.player1Hand = this.player1.getAction();
+    this.player2Hand = this.player2.getAction();
   }
 
   compareHand(player1Hand, player2Hand) {

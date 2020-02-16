@@ -118,7 +118,29 @@ describe("Rock Scissors Paper Game", () => {
         expect(humanVsCom.player2.name).toBe("Watson");
         expect(humanVsCom.player2.handOptions).toBe(mockHandOptions);
         expect(humanVsCom.winRule).toEqual(mockWinRule);
+        expect(humanVsCom.player1Hand).toBe("");
+        expect(humanVsCom.player2Hand).toBe("");
         expect(humanVsCom.result).toBe("");
+      });
+    });
+
+    describe("Play Game method", () => {
+      it("should invoke two players - human and computer to get a hand action and store it in player1Hand and player2Hand state", () => {
+        mockCLInterface.askHandAction = jest.fn(() => "rock");
+        humanVsCom.player2.getAction = jest.fn(() => "rock");
+        humanVsCom.playGame();
+        expect(humanVsCom.player1Hand).toBe("rock");
+        expect(humanVsCom.player2Hand).toBe("rock");
+        mockCLInterface.askHandAction = jest.fn(() => "paper");
+        humanVsCom.player2.getAction = jest.fn(() => "scissors");
+        humanVsCom.playGame();
+        expect(humanVsCom.player1Hand).toBe("paper");
+        expect(humanVsCom.player2Hand).toBe("scissors");
+        mockCLInterface.askHandAction = jest.fn(() => "scissors");
+        humanVsCom.player2.getAction = jest.fn(() => "paper");
+        humanVsCom.playGame();
+        expect(humanVsCom.player1Hand).toBe("scissors");
+        expect(humanVsCom.player2Hand).toBe("paper");
       });
     });
   });
@@ -132,7 +154,29 @@ describe("Rock Scissors Paper Game", () => {
         expect(comVsCom.player2.playerType).toBe("computer");
         expect(comVsCom.player2.handOptions).toBe(mockHandOptions);
         expect(comVsCom.winRule).toEqual(mockWinRule);
+        expect(comVsCom.player1Hand).toBe("");
+        expect(comVsCom.player2Hand).toBe("");
         expect(comVsCom.result).toBe("");
+      });
+    });
+
+    describe("Play Game method", () => {
+      it("should invoke two computer players to get a hand action and store it in player1Hand and player2Hand state", () => {
+        comVsCom.player1.getAction = jest.fn(() => "rock");
+        comVsCom.player2.getAction = jest.fn(() => "paper");
+        comVsCom.playGame();
+        expect(comVsCom.player1Hand).toBe("rock");
+        expect(comVsCom.player2Hand).toBe("paper");
+        comVsCom.player1.getAction = jest.fn(() => "paper");
+        comVsCom.player2.getAction = jest.fn(() => "scissors");
+        comVsCom.playGame();
+        expect(comVsCom.player1Hand).toBe("paper");
+        expect(comVsCom.player2Hand).toBe("scissors");
+        comVsCom.player1.getAction = jest.fn(() => "scissors");
+        comVsCom.player2.getAction = jest.fn(() => "rock");
+        comVsCom.playGame();
+        expect(comVsCom.player1Hand).toBe("scissors");
+        expect(comVsCom.player2Hand).toBe("rock");
       });
     });
   });
