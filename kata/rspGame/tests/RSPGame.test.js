@@ -15,8 +15,12 @@ const human = new HumanPlayer("Alice", mockHandOptions, mockCLInterface);
 const computer = new ComPlayer("Watson", mockHandOptions);
 const cpu = new ComPlayer("Intel", mockHandOptions);
 
-const humanVsCom = new RSPGame(human, computer, mockWinRule);
-const comVsCom = new RSPGame(cpu, computer, mockWinRule);
+let humanVsCom;
+let comVsCom;
+beforeEach(() => {
+  humanVsCom = new RSPGame(human, computer, mockWinRule);
+  comVsCom = new RSPGame(cpu, computer, mockWinRule);
+});
 
 describe("Rock Scissors Paper Game", () => {
   describe("Instance", () => {
@@ -69,12 +73,35 @@ describe("Rock Scissors Paper Game", () => {
       });
 
       it("should evaluate 2 players' hands and evaluate the winner, loser or draw in human vs computer game", () => {
-        expect(humanVsCom.compareHand("rock", "rock")).toBe("Draw");
-        expect(humanVsCom.compareHand("paper", "paper")).toBe("Draw");
-        expect(humanVsCom.compareHand("scissors", "paper")).toBe("Player1");
-        expect(humanVsCom.compareHand("paper", "rock")).toBe("Player1");
-        expect(humanVsCom.compareHand("rock", "paper")).toBe("Player2");
-        expect(humanVsCom.compareHand("paper", "scissors")).toBe("Player2");
+        humanVsCom.compareHand("rock", "rock");
+        expect(humanVsCom.result).toBe("Draw");
+        humanVsCom.compareHand("paper", "paper");
+        expect(humanVsCom.result).toBe("Draw");
+        humanVsCom.compareHand("scissors", "paper");
+        expect(humanVsCom.result).toBe("Alice the Player 1 Win");
+        humanVsCom.compareHand("paper", "rock");
+        expect(humanVsCom.result).toBe("Alice the Player 1 Win");
+        humanVsCom.compareHand("rock", "paper");
+        expect(humanVsCom.result).toBe("Watson the Player 2 Win");
+        humanVsCom.compareHand("paper", "scissors");
+        expect(humanVsCom.result).toBe("Watson the Player 2 Win");
+      });
+    });
+
+    describe("Show Result method", () => {
+      it("should throw error when the result is empty string", () => {
+        expect(() => humanVsCom.showResult()).toThrow(
+          "Show Result method: No result shown"
+        );
+      });
+
+      it("should show game result after every round", () => {
+        humanVsCom.compareHand("rock", "rock");
+        expect(humanVsCom.showResult()).toBe("Draw");
+        humanVsCom.compareHand("rock", "scissors");
+        expect(humanVsCom.showResult()).toBe("Alice the Player 1 Win");
+        humanVsCom.compareHand("scissors", "rock");
+        expect(humanVsCom.showResult()).toBe("Watson the Player 2 Win");
       });
     });
   });

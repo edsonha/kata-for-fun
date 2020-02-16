@@ -30,12 +30,19 @@ class RSPGame {
       throw new Error("Compare Hand method: Input is not recognized");
     }
     if (player1Hand === player2Hand) {
-      return "Draw";
+      this.result = "Draw";
     } else if (this.winRule[player1Hand].includes(player2Hand)) {
-      return "Player1";
+      this.result = `${this.player1.name} the Player 1 Win`;
     } else {
-      return "Player2";
+      this.result = `${this.player2.name} the Player 2 Win`;
     }
+  }
+
+  showResult() {
+    if (this.result.length === 0) {
+      throw new Error("Show Result method: No result shown");
+    }
+    return this.result;
   }
 }
 
