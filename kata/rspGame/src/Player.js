@@ -17,8 +17,7 @@ class HumanPlayer extends Player {
     if (
       typeof chosenInterface !== "object" ||
       !chosenInterface ||
-      Array.isArray(chosenInterface) ||
-      Object.entries(chosenInterface).length === 0
+      Array.isArray(chosenInterface)
     ) {
       throw new Error(
         "Invalid interface: Unable to create Human Player instance"

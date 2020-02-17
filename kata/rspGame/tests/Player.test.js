@@ -72,9 +72,6 @@ describe("Human Player", () => {
       expect(() => new HumanPlayer("Alice", mockHandOptions, [])).toThrow(
         errMsg
       );
-      expect(() => new HumanPlayer("Alice", mockHandOptions, {})).toThrow(
-        errMsg
-      );
       expect(() => new HumanPlayer("Alice", mockHandOptions, null)).toThrow(
         errMsg
       );
