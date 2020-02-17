@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "inquirer": "^7.0.4",
     "jest": "~24.7.1"
   }
 }

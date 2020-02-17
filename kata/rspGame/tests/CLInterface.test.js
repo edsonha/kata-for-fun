@@ -9,6 +9,18 @@ afterEach(() => {
 });
 
 describe("Command Line Interface", () => {
+  describe("Create Game method", () => {
+    it("should return the response to create either humanVsCom game or comVsCom game from inquirer.js", async () => {
+      inquirer.prompt
+        .mockResolvedValueOnce({ game: "HumanVsCom" })
+        .mockResolvedValueOnce({ humanAction: "ComVsCom" });
+      const firstAnswer = await mockInterface.createGame();
+      expect(firstAnswer).toBe("HumanVsCom");
+      const secondAnswer = await mockInterface.askHandAction();
+      expect(secondAnswer).toBe("ComVsCom");
+    });
+  });
+
   describe("Ask Hand Action method", () => {
     it("should return the chosen option given by prompt from inquirer.js", async () => {
       inquirer.prompt
