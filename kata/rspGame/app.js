@@ -10,12 +10,10 @@ const cpu = new ComPlayer("Intel", HAND_OPTIONS);
 
 const startGame = async () => {
   const chosenGame = await clInterface.createGame();
-  chosenGame === "ComVsCom"
-    ? intializeComVsComGame()
-    : intializeHumanVsComGame();
+  chosenGame === "ComVsCom" ? playComVsComGame() : playHumanVsComGame();
 };
 
-const intializeComVsComGame = () => {
+const playComVsComGame = () => {
   const comVsCom = new RSPGame(cpu, computer, WIN_RULE);
   comVsCom.playGame();
   const { player1Hand, player2Hand, player1, player2 } = comVsCom;
@@ -26,13 +24,15 @@ const intializeComVsComGame = () => {
   );
 };
 
-// const intializeHumanVsComGame = () => {
-//   const humanVsCom = new RSPGame(human, computer, WIN_RULE);
-//   humanVsCom.playGame();
-//   humanVsCom.compareHand(humanVsCom.player1Hand, humanVsCom.player2Hand);
-//   console.log(
-//     `${humanVsCom.player1.name} choose ${humanVsCom.player1Hand}\n${humanVsCom.player2.name} choose ${humanVsCom.player2Hand}\nResult is ${humanVsCom.result}`
-//   );
-// };
+const playHumanVsComGame = async () => {
+  const humanVsCom = new RSPGame(human, computer, WIN_RULE);
+  const { player1, player2 } = humanVsCom;
+  const humanHand = await player1.getAction();
+  const comHand = player2.getAction();
+  humanVsCom.compareHand(humanHand, comHand);
+  console.log(
+    `${player1.name} choose ${humanHand}\n${humanVsCom.player2.name} choose ${comHand}\nResult is ${humanVsCom.result}`
+  );
+};
 
 startGame();
