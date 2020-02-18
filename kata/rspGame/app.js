@@ -13,12 +13,11 @@ const startGame = async () => {
   chosenGame === "ComVsCom" ? playComVsComGame() : playHumanVsComGame();
 };
 
-const playComVsComGame = () => {
+const playComVsComGame = async () => {
   const comVsCom = new RSPGame(cpu, computer, WIN_RULE);
-  comVsCom.playGame();
-  const { player1Hand, player2Hand, player1, player2 } = comVsCom;
+  const [player1Hand, player2Hand] = await comVsCom.playGame();
   comVsCom.compareHand(player1Hand, player2Hand);
-  const { result } = comVsCom;
+  const { player1, player2, result } = comVsCom;
   console.log(
     `${player1.name} choose ${player1Hand}\n${player2.name} choose ${player2Hand}\nResult is ${result}`
   );
@@ -26,12 +25,11 @@ const playComVsComGame = () => {
 
 const playHumanVsComGame = async () => {
   const humanVsCom = new RSPGame(human, computer, WIN_RULE);
-  const { player1, player2 } = humanVsCom;
-  const humanHand = await player1.getAction();
-  const comHand = player2.getAction();
+  const [humanHand, comHand] = await humanVsCom.playGame();
   humanVsCom.compareHand(humanHand, comHand);
+  const { player1, player2, result } = humanVsCom;
   console.log(
-    `${player1.name} choose ${humanHand}\n${humanVsCom.player2.name} choose ${comHand}\nResult is ${humanVsCom.result}`
+    `${player1.name} choose ${humanHand}\n${player2.name} choose ${comHand}\nResult is ${result}`
   );
 };
 

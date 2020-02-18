@@ -24,9 +24,10 @@ class RSPGame {
     this.result = "";
   }
 
-  playGame() {
-    this.player1Hand = this.player1.getAction();
-    this.player2Hand = this.player2.getAction();
+  async playGame() {
+    this.player1Hand = await this.player1.getAction();
+    this.player2Hand = await this.player2.getAction();
+    return [this.player1Hand, this.player2Hand];
   }
 
   compareHand(player1Hand, player2Hand) {

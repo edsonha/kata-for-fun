@@ -125,20 +125,20 @@ describe("Rock Scissors Paper Game", () => {
     });
 
     describe("Play Game method", () => {
-      it("should invoke two players - human and computer to get a hand action and store it in player1Hand and player2Hand state", () => {
+      it("should invoke two players - human and computer to get a hand action and store it in player1Hand and player2Hand state", async () => {
         mockCLInterface.askHandAction = jest.fn(() => "rock");
         humanVsCom.player2.getAction = jest.fn(() => "rock");
-        humanVsCom.playGame();
+        await humanVsCom.playGame();
         expect(humanVsCom.player1Hand).toBe("rock");
         expect(humanVsCom.player2Hand).toBe("rock");
         mockCLInterface.askHandAction = jest.fn(() => "paper");
         humanVsCom.player2.getAction = jest.fn(() => "scissors");
-        humanVsCom.playGame();
+        await humanVsCom.playGame();
         expect(humanVsCom.player1Hand).toBe("paper");
         expect(humanVsCom.player2Hand).toBe("scissors");
         mockCLInterface.askHandAction = jest.fn(() => "scissors");
         humanVsCom.player2.getAction = jest.fn(() => "paper");
-        humanVsCom.playGame();
+        await humanVsCom.playGame();
         expect(humanVsCom.player1Hand).toBe("scissors");
         expect(humanVsCom.player2Hand).toBe("paper");
       });
@@ -161,20 +161,20 @@ describe("Rock Scissors Paper Game", () => {
     });
 
     describe("Play Game method", () => {
-      it("should invoke two computer players to get a hand action and store it in player1Hand and player2Hand state", () => {
+      it("should invoke two computer players to get a hand action and store it in player1Hand and player2Hand state", async () => {
         comVsCom.player1.getAction = jest.fn(() => "rock");
         comVsCom.player2.getAction = jest.fn(() => "paper");
-        comVsCom.playGame();
+        await comVsCom.playGame();
         expect(comVsCom.player1Hand).toBe("rock");
         expect(comVsCom.player2Hand).toBe("paper");
         comVsCom.player1.getAction = jest.fn(() => "paper");
         comVsCom.player2.getAction = jest.fn(() => "scissors");
-        comVsCom.playGame();
+        await comVsCom.playGame();
         expect(comVsCom.player1Hand).toBe("paper");
         expect(comVsCom.player2Hand).toBe("scissors");
         comVsCom.player1.getAction = jest.fn(() => "scissors");
         comVsCom.player2.getAction = jest.fn(() => "rock");
-        comVsCom.playGame();
+        await comVsCom.playGame();
         expect(comVsCom.player1Hand).toBe("scissors");
         expect(comVsCom.player2Hand).toBe("rock");
       });
