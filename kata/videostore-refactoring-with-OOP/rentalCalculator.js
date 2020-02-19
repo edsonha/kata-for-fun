@@ -1,5 +1,6 @@
 const Customer = require("./Customer");
 const Rental = require("./Rental");
+const { createMovie } = require("./Movie");
 
 function printRentalBill(rental, rentalBill) {
   return `\t${rental.movies.title}\t${rentalBill}\n`;
@@ -26,9 +27,15 @@ function calculateFrequentRenterPoints(cust, rentals) {
 function statement(customer, movies) {
   const cust = new Customer(customer.name);
   let result = `Rental Record for ${cust.name}\n`;
-  const rentals = customer.rentals.map(
-    rental => new Rental(movies[rental.movieID], rental.days)
-  );
+  const rentals = customer.rentals.map(rental => {
+    const movieDetails = movies[rental.movieID];
+    const movie = createMovie(
+      rental.movieID,
+      movieDetails.title,
+      movieDetails.code
+    );
+    return new Rental(movie, rental.days);
+  });
 
   for (let rental of rentals) {
     const rentalBill = rental.getBill();
