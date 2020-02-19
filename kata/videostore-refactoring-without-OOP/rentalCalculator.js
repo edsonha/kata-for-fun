@@ -6,6 +6,9 @@ function statement(customer, movies) {
     let movie = movies[r.movieID];
     let thisAmount = 0;
 
+    if (movie === undefined) {
+      throw new Error(`Invalid movieID`);
+    }
     // determine amount for each movie
     switch (movie.code) {
       case "regular":

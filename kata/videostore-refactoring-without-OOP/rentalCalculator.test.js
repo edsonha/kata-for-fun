@@ -24,6 +24,15 @@ describe("App", () => {
     expect(statement(customer, movies)).toMatch(/Rental Record for martin/);
   });
 
+  it("should calculate throw an error when the movieId is not valid", () => {
+    const errMsg = `Invalid movieID`;
+    let customer2 = {
+      name: "fowler",
+      rentals: [{ movieID: "F006", days: 3 }]
+    };
+    expect(() => statement(customer2, movies)).toThrow(errMsg);
+  });
+
   it("should calculate rental bill for a regular movie when it's rented for less than or equal two days", () => {
     expect(statement(customer, movies)).toMatch(/Trois Couleurs: Bleu\s2\n/);
   });
