@@ -5,10 +5,6 @@ function printRentalBill(rental, rentalBill) {
   return `\t${rental.movies.title}\t${rentalBill}\n`;
 }
 
-function qualifiedForExtraFrequentRenterPoint(rental) {
-  return rental.movies.code === "new" && rental.days > 2;
-}
-
 function getTotalBill(rentals) {
   let totalBill = 0;
   for (let rental of rentals) {
@@ -21,7 +17,7 @@ function getTotalBill(rentals) {
 function calculateFrequentRenterPoints(cust, rentals) {
   for (let rental of rentals) {
     cust.incrementRentalPoints();
-    if (qualifiedForExtraFrequentRenterPoint(rental))
+    if (rental.qualifiedForExtraFrequentRenterPoint())
       cust.incrementRentalPoints();
   }
   return cust.frequentRenterPoints;

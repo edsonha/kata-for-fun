@@ -29,6 +29,10 @@ class Rental {
     }
     return rentalBill;
   }
+
+  qualifiedForExtraFrequentRenterPoint() {
+    return this.movies.code === "new" && this.days > 2;
+  }
 }
 
 module.exports = Rental;
