@@ -45,6 +45,16 @@ function getTotalBill(customer, movies) {
   return totalBill;
 }
 
+function calculateFrequentRenterPoints(customer, movies) {
+  let frequentRenterPoints = 0;
+  for (let rental of customer.rentals) {
+    frequentRenterPoints++;
+    if (qualifiedForExtraFrequentRenterPoint(movies, rental))
+      frequentRenterPoints++;
+  }
+  return frequentRenterPoints;
+}
+
 function statement(customer, movies) {
   let result = `Rental Record for ${customer.name}\n`;
   for (let rental of customer.rentals) {
@@ -52,13 +62,7 @@ function statement(customer, movies) {
     result += printRentalBill(movies, rental, rentalBill);
   }
 
-  let frequentRenterPoints = 0;
-  for (let rental of customer.rentals) {
-    frequentRenterPoints++;
-    if (qualifiedForExtraFrequentRenterPoint(movies, rental))
-      frequentRenterPoints++;
-  }
-
+  const frequentRenterPoints = calculateFrequentRenterPoints(customer, movies);
   const totalBill = getTotalBill(customer, movies);
 
   result += `Amount owed is ${totalBill}\n`;
