@@ -28,11 +28,15 @@ function calculateBillForRental(movies, rental) {
   return rentalBill;
 }
 
+function printRentalBill(movies, rental, rentalBill) {
+  return `\t${getMovie(movies, rental).title}\t${rentalBill}\n`;
+}
+
 function statement(customer, movies) {
   let result = `Rental Record for ${customer.name}\n`;
   for (let rental of customer.rentals) {
     const rentalBill = calculateBillForRental(movies, rental);
-    result += `\t${getMovie(movies, rental).title}\t${rentalBill}\n`;
+    result += printRentalBill(movies, rental, rentalBill);
   }
 
   let totalBill = 0;
