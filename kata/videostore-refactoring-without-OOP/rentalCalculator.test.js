@@ -1,4 +1,4 @@
-const statement = require("./app");
+const statement = require("./rentalCalculator");
 
 let customer = {
   name: "martin",
