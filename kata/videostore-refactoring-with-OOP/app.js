@@ -15,8 +15,8 @@ let movies = {
   F001: { title: "Ran", code: "regular" },
   F002: { title: "Trois Couleurs: Bleu", code: "regular" },
   F003: { title: "New movie", code: "new" },
-  F004: { title: "Kid movie1", code: "childrens" },
-  F005: { title: "Kid movie2", code: "childrens" }
+  F004: { title: "Kid movie1", code: "children" },
+  F005: { title: "Kid movie2", code: "children" }
 };
 
 console.log(statement(customer, movies));
