@@ -1,32 +1,6 @@
 const Customer = require("./Customer");
 const Rental = require("./Rental");
 
-function calculateBillForRental(rental) {
-  let rentalBill = 0;
-  if (rental.movies === undefined) {
-    throw new Error(`Invalid movieID`);
-  }
-
-  switch (rental.movies.code) {
-    case "regular":
-      rentalBill = 2;
-      if (rental.days > 2) {
-        rentalBill += (rental.days - 2) * 1.5;
-      }
-      break;
-    case "new":
-      rentalBill = rental.days * 3;
-      break;
-    case "children":
-      rentalBill = 1.5;
-      if (rental.days > 3) {
-        rentalBill += (rental.days - 3) * 1.5;
-      }
-      break;
-  }
-  return rentalBill;
-}
-
 function printRentalBill(rental, rentalBill) {
   return `\t${rental.movies.title}\t${rentalBill}\n`;
 }
@@ -38,7 +12,7 @@ function qualifiedForExtraFrequentRenterPoint(rental) {
 function getTotalBill(rentals) {
   let totalBill = 0;
   for (let rental of rentals) {
-    const rentalBill = calculateBillForRental(rental);
+    const rentalBill = rental.getBill();
     totalBill += rentalBill;
   }
   return totalBill;
@@ -61,7 +35,7 @@ function statement(customer, movies) {
   );
 
   for (let rental of rentals) {
-    const rentalBill = calculateBillForRental(rental);
+    const rentalBill = rental.getBill();
     result += printRentalBill(rental, rentalBill);
   }
 
