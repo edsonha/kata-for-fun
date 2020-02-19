@@ -32,6 +32,10 @@ function printRentalBill(movies, rental, rentalBill) {
   return `\t${getMovie(movies, rental).title}\t${rentalBill}\n`;
 }
 
+function qualifiedForExtraFrequentRenterPoint(movies, rental) {
+  return getMovie(movies, rental).code === "new" && rental.days > 2;
+}
+
 function statement(customer, movies) {
   let result = `Rental Record for ${customer.name}\n`;
   for (let rental of customer.rentals) {
@@ -48,7 +52,7 @@ function statement(customer, movies) {
   let frequentRenterPoints = 0;
   for (let rental of customer.rentals) {
     frequentRenterPoints++;
-    if (getMovie(movies, rental).code === "new" && rental.days > 2)
+    if (qualifiedForExtraFrequentRenterPoint(movies, rental))
       frequentRenterPoints++;
   }
 
