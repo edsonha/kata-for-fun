@@ -18,7 +18,7 @@ function calculateBillForRental(movies, rental) {
     case "new":
       rentalBill = rental.days * 3;
       break;
-    case "childrens":
+    case "children":
       rentalBill = 1.5;
       if (rental.days > 3) {
         rentalBill += (rental.days - 3) * 1.5;
@@ -62,8 +62,8 @@ function statement(customer, movies) {
     result += printRentalBill(movies, rental, rentalBill);
   }
 
-  const frequentRenterPoints = calculateFrequentRenterPoints(customer, movies);
   const totalBill = getTotalBill(customer, movies);
+  const frequentRenterPoints = calculateFrequentRenterPoints(customer, movies);
 
   result += `Amount owed is ${totalBill}\n`;
   result += `You earned ${frequentRenterPoints} frequent renter points\n`;
