@@ -1,3 +1,6 @@
+const Customer = require("./Customer");
+const Rental = require("./Rental");
+
 function getMovie(movies, rental) {
   return movies[rental.movieID];
 }
@@ -32,8 +35,8 @@ function printRentalBill(movies, rental, rentalBill) {
   return `\t${getMovie(movies, rental).title}\t${rentalBill}\n`;
 }
 
-function qualifiedForExtraFrequentRenterPoint(movies, rental) {
-  return getMovie(movies, rental).code === "new" && rental.days > 2;
+function qualifiedForExtraFrequentRenterPoint(rental) {
+  return rental.movies.code === "new" && rental.days > 2;
 }
 
 function getTotalBill(customer, movies) {
@@ -45,28 +48,32 @@ function getTotalBill(customer, movies) {
   return totalBill;
 }
 
-function calculateFrequentRenterPoints(customer, movies) {
-  let frequentRenterPoints = 0;
-  for (let rental of customer.rentals) {
-    frequentRenterPoints++;
-    if (qualifiedForExtraFrequentRenterPoint(movies, rental))
-      frequentRenterPoints++;
+function calculateFrequentRenterPoints(cust, rentals) {
+  for (let rental of rentals) {
+    cust.incrementRentalPoints();
+    if (qualifiedForExtraFrequentRenterPoint(rental))
+      cust.incrementRentalPoints();
   }
-  return frequentRenterPoints;
+  return cust.frequentRenterPoints;
 }
 
 function statement(customer, movies) {
-  let result = `Rental Record for ${customer.name}\n`;
+  const cust = new Customer(customer.name);
+  let result = `Rental Record for ${cust.name}\n`;
+  const rentals = customer.rentals.map(
+    rental => new Rental(movies[rental.movieID], rental.days)
+  );
+
   for (let rental of customer.rentals) {
     const rentalBill = calculateBillForRental(movies, rental);
     result += printRentalBill(movies, rental, rentalBill);
   }
 
   const totalBill = getTotalBill(customer, movies);
-  const frequentRenterPoints = calculateFrequentRenterPoints(customer, movies);
+  calculateFrequentRenterPoints(cust, rentals);
 
   result += `Amount owed is ${totalBill}\n`;
-  result += `You earned ${frequentRenterPoints} frequent renter points\n`;
+  result += `You earned ${cust.frequentRenterPoints} frequent renter points\n`;
 
   return result;
 }
