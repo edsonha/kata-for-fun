@@ -36,17 +36,20 @@ function qualifiedForExtraFrequentRenterPoint(movies, rental) {
   return getMovie(movies, rental).code === "new" && rental.days > 2;
 }
 
+function getTotalBill(customer, movies) {
+  let totalBill = 0;
+  for (let rental of customer.rentals) {
+    const rentalBill = calculateBillForRental(movies, rental);
+    totalBill += rentalBill;
+  }
+  return totalBill;
+}
+
 function statement(customer, movies) {
   let result = `Rental Record for ${customer.name}\n`;
   for (let rental of customer.rentals) {
     const rentalBill = calculateBillForRental(movies, rental);
     result += printRentalBill(movies, rental, rentalBill);
-  }
-
-  let totalBill = 0;
-  for (let rental of customer.rentals) {
-    const rentalBill = calculateBillForRental(movies, rental);
-    totalBill += rentalBill;
   }
 
   let frequentRenterPoints = 0;
@@ -55,6 +58,8 @@ function statement(customer, movies) {
     if (qualifiedForExtraFrequentRenterPoint(movies, rental))
       frequentRenterPoints++;
   }
+
+  const totalBill = getTotalBill(customer, movies);
 
   result += `Amount owed is ${totalBill}\n`;
   result += `You earned ${frequentRenterPoints} frequent renter points\n`;
