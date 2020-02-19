@@ -29,14 +29,19 @@ function calculateBillForRental(movies, rental) {
 }
 
 function statement(customer, movies) {
-  let totalBill = 0;
-  let frequentRenterPoints = 0;
   let result = `Rental Record for ${customer.name}\n`;
   for (let rental of customer.rentals) {
     const rentalBill = calculateBillForRental(movies, rental);
     result += `\t${getMovie(movies, rental).title}\t${rentalBill}\n`;
+  }
+
+  let totalBill = 0;
+  for (let rental of customer.rentals) {
+    const rentalBill = calculateBillForRental(movies, rental);
     totalBill += rentalBill;
   }
+
+  let frequentRenterPoints = 0;
   for (let rental of customer.rentals) {
     frequentRenterPoints++;
     if (getMovie(movies, rental).code === "new" && rental.days > 2)
