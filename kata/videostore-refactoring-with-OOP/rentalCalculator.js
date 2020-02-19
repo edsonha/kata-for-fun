@@ -26,7 +26,6 @@ function calculateFrequentRenterPoints(cust, rentals) {
 
 function statement(customer, movies) {
   const cust = new Customer(customer.name);
-  let result = `Rental Record for ${cust.name}\n`;
   const rentals = customer.rentals.map(rental => {
     const movieDetails = movies[rental.movieID];
     const movie = createMovie(
@@ -37,6 +36,7 @@ function statement(customer, movies) {
     return new Rental(movie, rental.days);
   });
 
+  let result = `Rental Record for ${cust.name}\n`;
   for (let rental of rentals) {
     const rentalBill = rental.getBill();
     result += printRentalBill(rental, rentalBill);
