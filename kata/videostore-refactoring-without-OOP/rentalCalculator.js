@@ -33,7 +33,7 @@ function statement(customer, movies) {
   let frequentRenterPoints = 0;
   let result = `Rental Record for ${customer.name}\n`;
   for (let rental of customer.rentals) {
-    let rentalBill = calculateBillForRental(movies, rental);
+    const rentalBill = calculateBillForRental(movies, rental);
 
     frequentRenterPoints++;
     if (getMovie(movies, rental).code === "new" && rental.days > 2)
