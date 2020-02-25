@@ -1,10 +1,6 @@
 const Shop = require("../src/Shop");
-const {
-  RegularItem,
-  AgedBrie,
-  Sulfuras,
-  BackstagePass
-} = require("../src/Item");
+const Item = require("../src/Item");
+const { AGED_BRIE, BACKSTAGE_PASS, SULFURAS } = require("../src/constants");
 
 describe("Shop", () => {
   it("should create an empty list of items when no items are provided", () => {
@@ -14,15 +10,15 @@ describe("Shop", () => {
 
   it("should update items correctly", () => {
     const items = [
-      new RegularItem("Random Item", 0, 0),
-      new AgedBrie(0, 0),
-      new BackstagePass(0, 0),
-      new Sulfuras(0, 0)
+      new Item("Regular Item", 0, 0),
+      new Item(AGED_BRIE, 0, 0),
+      new Item(BACKSTAGE_PASS, 0, 0),
+      new Item(SULFURAS, 0, 0)
     ];
     const shop = new Shop(items);
     shop.updateQuality();
 
-    expect(shop.items[0].name).toBe("Random Item");
+    expect(shop.items[0].name).toBe("Regular Item");
     expect(shop.items[0].daysRemaining).toBe(-1);
     expect(shop.items[0].quality).toBe(0);
 

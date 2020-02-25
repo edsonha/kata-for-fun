@@ -1,8 +1,8 @@
-const { createItem } = require("../src/Item");
+const Item = require("../src/Item");
 const { AGED_BRIE, SULFURAS, BACKSTAGE_PASS } = require("../src/constants");
 
 function itemAfterUpdate(itemName, daysRemaining, quality) {
-  const item = createItem(itemName, daysRemaining, quality);
+  const item = new Item(itemName, daysRemaining, quality);
   item.update();
   return item;
 }
@@ -10,21 +10,19 @@ function itemAfterUpdate(itemName, daysRemaining, quality) {
 describe("Item", () => {
   describe("For regular items", () => {
     it("degrades quality by 2 if it is past its daysRemaining date", () => {
-      const itemName = "Random Item";
+      const itemName = "Regular Item";
       const daysRemaining = 0;
       const quality = 5;
       const item = itemAfterUpdate(itemName, daysRemaining, quality);
-      expect(item.name).toBe("Random Item");
       expect(item.daysRemaining).toBe(-1);
       expect(item.quality).toBe(3);
     });
 
     it("should not degrade quality to less than 0", () => {
-      const itemName = "Random Item";
+      const itemName = "Regular Item";
       const daysRemaining = 5;
       const quality = 0;
       const item = itemAfterUpdate(itemName, daysRemaining, quality);
-      expect(item.name).toBe("Random Item");
       expect(item.daysRemaining).toBe(4);
       expect(item.quality).toBe(0);
     });
@@ -36,7 +34,6 @@ describe("Item", () => {
       const daysRemaining = 5;
       const quality = 0;
       const item = itemAfterUpdate(itemName, daysRemaining, quality);
-      expect(item.name).toBe("Aged Brie");
       expect(item.daysRemaining).toBe(4);
       expect(item.quality).toBe(1);
     });
@@ -46,7 +43,6 @@ describe("Item", () => {
       const daysRemaining = 5;
       const quality = 50;
       const item = itemAfterUpdate(itemName, daysRemaining, quality);
-      expect(item.name).toBe("Aged Brie");
       expect(item.daysRemaining).toBe(4);
       expect(item.quality).toBe(50);
     });
@@ -58,7 +54,6 @@ describe("Item", () => {
       const daysRemaining = 5;
       const quality = 40;
       const item = itemAfterUpdate(itemName, daysRemaining, quality);
-      expect(item.name).toBe("Sulfuras, Hand of Ragnaros");
       expect(item.daysRemaining).toBe(5);
       expect(item.quality).toBe(40);
     });
@@ -70,7 +65,6 @@ describe("Item", () => {
       const daysRemaining = 15;
       const quality = 20;
       const item = itemAfterUpdate(itemName, daysRemaining, quality);
-      expect(item.name).toBe("Backstage passes to a TAFKAL80ETC concert");
       expect(item.daysRemaining).toBe(14);
       expect(item.quality).toBe(21);
     });
@@ -80,7 +74,6 @@ describe("Item", () => {
       const daysRemaining = 10;
       const quality = 20;
       const item = itemAfterUpdate(itemName, daysRemaining, quality);
-      expect(item.name).toBe("Backstage passes to a TAFKAL80ETC concert");
       expect(item.daysRemaining).toBe(9);
       expect(item.quality).toBe(22);
     });
@@ -90,7 +83,6 @@ describe("Item", () => {
       const daysRemaining = 5;
       const quality = 20;
       const item = itemAfterUpdate(itemName, daysRemaining, quality);
-      expect(item.name).toBe("Backstage passes to a TAFKAL80ETC concert");
       expect(item.daysRemaining).toBe(4);
       expect(item.quality).toBe(23);
     });
@@ -100,7 +92,6 @@ describe("Item", () => {
       const daysRemaining = 0;
       const quality = 20;
       const item = itemAfterUpdate(itemName, daysRemaining, quality);
-      expect(item.name).toBe("Backstage passes to a TAFKAL80ETC concert");
       expect(item.daysRemaining).toBe(-1);
       expect(item.quality).toBe(0);
     });
