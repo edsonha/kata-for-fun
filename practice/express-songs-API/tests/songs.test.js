@@ -31,7 +31,7 @@ describe("Route /songs", () => {
         .get("/songs/100")
         .then(response => {
           expect(response.status).toBe(404);
-          expect(response.body).toBe("Song is not found");
+          expect(response.body.message).toBe("Song is not found");
         });
     });
   });
@@ -75,7 +75,7 @@ describe("Route /songs", () => {
         .send(requestBody)
         .then(response => {
           expect(response.status).toBe(404);
-          expect(response.body).toBe("Song is not found");
+          expect(response.body).toEqual({ message: "Song is not found" });
         });
     });
   });
@@ -97,7 +97,7 @@ describe("Route /songs", () => {
         .delete("/songs/100")
         .then(response => {
           expect(response.status).toBe(404);
-          expect(response.body).toBe("Song is not found");
+          expect(response.body).toEqual({ message: "Song is not found" });
         });
     });
   });

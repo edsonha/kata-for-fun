@@ -2,16 +2,22 @@ const express = require("express");
 const songsRouter = express.Router();
 const { songs } = require("../data/db.json");
 
+songsRouter.param("id", (req, res, next, id) => {
+  const song = songs.find(song => song.id === parseInt(id));
+  if (song) {
+    req.song = song;
+    next();
+  } else {
+    res.status(404).json({ message: "Song is not found" });
+  }
+});
+
 songsRouter.get("/", (req, res) => {
   res.status(200).json(songs);
 });
 
 songsRouter.get("/:id", (req, res) => {
-  const { id } = req.params;
-  const foundSong = songs.find(song => song.id === parseInt(id));
-  return foundSong
-    ? res.status(200).json(foundSong)
-    : res.status(404).json("Song is not found");
+  res.status(200).json(req.song);
 });
 
 songsRouter.post("/", (req, res) => {
@@ -22,24 +28,17 @@ songsRouter.post("/", (req, res) => {
 });
 
 songsRouter.put("/:id", (req, res) => {
-  const { id } = req.params;
-  const foundSong = songs.find(song => song.id === parseInt(id));
-  if (foundSong) {
-    const changedSong = Object.assign(foundSong, req.body);
-    res.status(200).json(changedSong);
-  } else {
-    res.status(404).json("Song is not found");
-  }
+  const oldSong = req.song;
+  const newSong = req.body;
+  const changedSong = Object.assign(oldSong, newSong);
+  res.status(200).json(changedSong);
 });
 
 songsRouter.delete("/:id", (req, res) => {
-  const { id } = req.params;
-  const songToDelete = songs.find(song => song.id === parseInt(id));
-  const index = songs.indexOf(songToDelete);
-  songs.splice(index, 1);
-  return songToDelete
-    ? res.status(200).json(songToDelete)
-    : res.status(404).json("Song is not found");
+  const songToDelete = req.song;
+  const deletedIndex = songs.indexOf(songToDelete);
+  songs.splice(deletedIndex, 1);
+  res.status(200).json(songToDelete);
 });
 
 module.exports = songsRouter;
