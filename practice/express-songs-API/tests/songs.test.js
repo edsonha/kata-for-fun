@@ -26,12 +26,14 @@ describe("Route /songs", () => {
         });
     });
 
-    it("/songs/:id should return error message when song with specified id is not found", () => {
+    it("/songs/:id should return 404 if song id does not exist", () => {
       return request(app)
         .get("/songs/100")
         .then(response => {
           expect(response.status).toBe(404);
-          expect(response.body.message).toBe("Song is not found");
+          expect(response.body.message).toBe(
+            "Unable to find song with id: 100"
+          );
         });
     });
   });
@@ -46,6 +48,18 @@ describe("Route /songs", () => {
         .then(response => {
           expect(response.status).toBe(201);
           expect(response.body).toEqual(responseBody);
+          expect(songs.length).toBe(4);
+        });
+    });
+
+    it("POST /songs should return 422 when no content is found", () => {
+      const requestBody = {};
+      return request(app)
+        .post("/songs")
+        .send(requestBody)
+        .then(response => {
+          expect(response.status).toBe(422);
+          expect(response.body.message).toBe("No content is found");
           expect(songs.length).toBe(4);
         });
     });
@@ -68,14 +82,16 @@ describe("Route /songs", () => {
         });
     });
 
-    it("PUT /songs/:id should return error message when song with specified id is not found", () => {
+    it("PUT /songs/:id should return 404 if song id does not exist", () => {
       const requestBody = { title: "change song", artist: "change artist" };
       return request(app)
         .put("/songs/100")
         .send(requestBody)
         .then(response => {
           expect(response.status).toBe(404);
-          expect(response.body).toEqual({ message: "Song is not found" });
+          expect(response.body).toEqual({
+            message: "Unable to find song with id: 100"
+          });
         });
     });
   });
@@ -92,12 +108,14 @@ describe("Route /songs", () => {
         });
     });
 
-    it("DELETE /songs/:id should return error message when song with specified id is not found", () => {
+    it("DELETE /songs/:id should return 404 if song id does not exist", () => {
       return request(app)
         .delete("/songs/100")
         .then(response => {
           expect(response.status).toBe(404);
-          expect(response.body).toEqual({ message: "Song is not found" });
+          expect(response.body).toEqual({
+            message: "Unable to find song with id: 100"
+          });
         });
     });
   });
