@@ -1,13 +1,24 @@
 const express = require("express");
 const songsRouter = express.Router();
+const Joi = require("@hapi/joi");
 const { songs } = require("../data/db.json");
+
+const schema = Joi.object({
+  id: Joi.number().integer(),
+  title: Joi.string()
+    .min(3)
+    .required(),
+  artist: Joi.string()
+    .min(3)
+    .required()
+});
 
 songsRouter.param("id", (req, res, next, id) => {
   const song = songs.find(song => song.id === parseInt(id));
   if (!song) {
-    error = new Error(`Unable to find song with id: ${id}`);
+    const error = new Error(`Unable to find song with id: ${id}`);
     error.code = 404;
-    throw error;
+    return next(error);
   }
   req.song = song;
   next();
@@ -32,11 +43,14 @@ songsRouter.get("/:id", (req, res, next) => {
 songsRouter.post("/", (req, res, next) => {
   try {
     const { title, artist } = req.body;
-    if (!title || !artist) {
-      error = new Error(`No content is found`);
-      error.code = 422;
-      throw error;
+
+    const validation = schema.validate(req.body);
+    if (validation.error) {
+      const error = new Error(validation.error.details[0].message);
+      error.code = 400;
+      return next(error);
     }
+
     const newSong = { id: songs.length + 1, title, artist };
     songs.push(newSong);
     res.status(201).json(newSong);
@@ -47,6 +61,12 @@ songsRouter.post("/", (req, res, next) => {
 
 songsRouter.put("/:id", (req, res, next) => {
   try {
+    const validation = schema.validate(req.body);
+    if (validation.error) {
+      const error = new Error(validation.error.details[0].message);
+      error.code = 400;
+      return next(error);
+    }
     const oldSong = req.song;
     const newSong = req.body;
     const changedSong = Object.assign(oldSong, newSong);

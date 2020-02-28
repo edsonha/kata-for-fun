@@ -10,19 +10,21 @@ describe("Route /songs", () => {
         .then(response => {
           expect(response.status).toBe(200);
           expect(response.body).toEqual(songs);
+          expect(response.body.length).toBe(3);
         });
     });
 
     it("/songs/:id should return song with specified id", () => {
+      const responseBody = {
+        id: 2,
+        title: "Alone",
+        artist: "Alan Walker"
+      };
       return request(app)
         .get("/songs/2")
         .then(response => {
           expect(response.status).toBe(200);
-          expect(response.body).toEqual({
-            id: 2,
-            title: "Alone",
-            artist: "Alan Walker"
-          });
+          expect(response.body).toEqual(responseBody);
         });
     });
 
@@ -52,14 +54,26 @@ describe("Route /songs", () => {
         });
     });
 
-    it("POST /songs should return 422 when no content is found", () => {
+    it("POST /songs should return 400 if the input is missing a field", () => {
+      const requestBody = { title: "test song" };
+      return request(app)
+        .post("/songs")
+        .send(requestBody)
+        .then(response => {
+          expect(response.status).toBe(400);
+          expect(response.body.message).toBe('"artist" is required');
+          expect(songs.length).toBe(4);
+        });
+    });
+
+    it("POST /songs should return 400 if the input is an empty a field", () => {
       const requestBody = {};
       return request(app)
         .post("/songs")
         .send(requestBody)
         .then(response => {
-          expect(response.status).toBe(422);
-          expect(response.body.message).toBe("No content is found");
+          expect(response.status).toBe(400);
+          expect(response.body.message).toBe('"title" is required');
           expect(songs.length).toBe(4);
         });
     });
@@ -91,6 +105,19 @@ describe("Route /songs", () => {
           expect(response.status).toBe(404);
           expect(response.body).toEqual({
             message: "Unable to find song with id: 100"
+          });
+        });
+    });
+
+    it("PUT /songs/:id should return 400 if there is a missing field", () => {
+      const requestBody = { id: 1, artist: "change artist" };
+      return request(app)
+        .put("/songs/1")
+        .send(requestBody)
+        .then(response => {
+          expect(response.status).toBe(400);
+          expect(response.body).toEqual({
+            message: `"title" is required`
           });
         });
     });
