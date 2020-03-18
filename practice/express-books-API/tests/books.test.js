@@ -22,7 +22,7 @@ describe("Route /books", () => {
         .get(route())
         .query({ title: "1984" });
       expect(response.body).toEqual([
-        { id: 2, title: "1984", author: "George Orwell" }
+        { id: "2", title: "1984", author: "George Orwell" }
       ]);
       expect(response.status).toBe(200);
       expect(response.headers["content-type"]).toMatch(/json/);
@@ -33,13 +33,30 @@ describe("Route /books", () => {
         .get(route())
         .query({ author: "George Orwell" });
       expect(response.body).toEqual([
-        { id: 1, title: "Animal Farm", author: "George Orwell" },
-        { id: 2, title: "1984", author: "George Orwell" },
-        { id: 3, title: "Homage to Catalonia", author: "George Orwell" },
-        { id: 4, title: "The Road to Wigan Pier", author: "George Orwell" }
+        { id: "1", title: "Animal Farm", author: "George Orwell" },
+        { id: "2", title: "1984", author: "George Orwell" },
+        { id: "3", title: "Homage to Catalonia", author: "George Orwell" },
+        { id: "4", title: "The Road to Wigan Pier", author: "George Orwell" }
       ]);
       expect(response.status).toBe(200);
       expect(response.headers["content-type"]).toMatch(/json/);
+    });
+  });
+
+  describe("POST", () => {
+    it("/books should add a book object to database", async () => {
+      const requestBody = { title: "test title", author: "test author" };
+      const responseBody = {
+        id: expect.any(String),
+        title: "test title",
+        author: "test author"
+      };
+      const response = await request(app)
+        .post(route())
+        .send(requestBody);
+      expect(response.status).toBe(201);
+      expect(response.body).toEqual(responseBody);
+      expect(books[books.length - 1]).toEqual(responseBody);
     });
   });
 });
