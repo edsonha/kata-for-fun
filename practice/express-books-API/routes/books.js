@@ -7,6 +7,17 @@ const filterBookBy = (property, value) => {
   return books.filter(book => book[property] === value);
 };
 
+booksRouter.param("id", async (req, res, next, id) => {
+  const book = books.find(book => book.id === id);
+  if (!book) {
+    const error = new Error(`Unable to find book with id: ${id}`);
+    error.code = 404;
+    return next(error);
+  }
+  req.book = book;
+  next();
+});
+
 booksRouter.get("/", (req, res, next) => {
   try {
     const { title, author } = req.query;
@@ -28,6 +39,16 @@ booksRouter.post("/", (req, res, next) => {
     newBook.id = uuidv4();
     books.push(newBook);
     res.status(201).json(newBook);
+  } catch (err) {
+    next(err);
+  }
+});
+
+booksRouter.delete("/:id", (req, res, next) => {
+  try {
+    const deletedIndex = books.indexOf(req.book);
+    books.splice(deletedIndex, 1);
+    res.status(200).json(req.book);
   } catch (err) {
     next(err);
   }

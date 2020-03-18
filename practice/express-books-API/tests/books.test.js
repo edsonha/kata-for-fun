@@ -59,4 +59,27 @@ describe("Route /books", () => {
       expect(books[books.length - 1]).toEqual(responseBody);
     });
   });
+
+  describe("DELETE", () => {
+    it("/books/:id should return delete the book from database and return the deleted book ", async () => {
+      const responseBody = {
+        id: "1",
+        title: "Animal Farm",
+        author: "George Orwell"
+      };
+      const response = await request(app).delete(route(1));
+      expect(response.body).toEqual(responseBody);
+      expect(response.status).toBe(200);
+      expect(books.length).toBe(6);
+    });
+
+    it("/books/:id should return 404 if book id does not exist", async () => {
+      const response = await request(app).delete(route(100));
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({
+        message: "Unable to find book with id: 100"
+      });
+      expect(books.length).toBe(6);
+    });
+  });
 });
