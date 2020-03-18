@@ -82,4 +82,39 @@ describe("Route /books", () => {
       expect(books.length).toBe(6);
     });
   });
+
+  describe("PUT", () => {
+    it("/books/:id should edit an existing book in database", async () => {
+      const requestBody = {
+        title: "The Perennial Philospohy",
+        author: "Aldous Huxley"
+      };
+      const responseBody = {
+        id: "5",
+        title: "The Perennial Philospohy",
+        author: "Aldous Huxley"
+      };
+      const response = await request(app)
+        .put(route(5))
+        .send(requestBody);
+      expect(response.status).toBe(202);
+      expect(response.body).toEqual(responseBody);
+      expect(books.length).toBe(6);
+    });
+
+    it("/books/:id should return 404 if book id does not exist", async () => {
+      const requestBody = {
+        title: "change title",
+        author: "change author"
+      };
+      const response = await request(app)
+        .put(route(50))
+        .send(requestBody);
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({
+        message: "Unable to find book with id: 50"
+      });
+      expect(books.length).toBe(6);
+    });
+  });
 });

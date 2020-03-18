@@ -54,6 +54,17 @@ booksRouter.delete("/:id", (req, res, next) => {
   }
 });
 
+booksRouter.put("/:id", (req, res, next) => {
+  try {
+    const oldBook = req.book;
+    const newBook = req.body;
+    const edittedSong = Object.assign(oldBook, newBook);
+    res.status(202).json(edittedSong);
+  } catch (err) {
+    next(err);
+  }
+});
+
 booksRouter.use((err, req, res, next) => {
   res.status(err.code || 500).json({ message: err.message });
 });
