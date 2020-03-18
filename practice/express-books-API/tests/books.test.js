@@ -44,7 +44,30 @@ describe("Route /books", () => {
   });
 
   describe("POST", () => {
-    it("/books should add a book object to database", async () => {
+    it("/books should not be allowed to add a book object to database if no token is given", async () => {
+      const requestBody = { title: "test title", author: "test author" };
+      const response = await request(app)
+        .post(route())
+        .send(requestBody);
+      expect(response.status).toBe(403);
+      expect(response.body).toEqual({
+        message: "Forbidden access"
+      });
+    });
+
+    it("/books should not be allowed to add a book object to database if incorrect token is given", async () => {
+      const requestBody = { title: "test title", author: "test author" };
+      const response = await request(app)
+        .post(route())
+        .set("Authorization", "Bearer incorrect-token")
+        .send(requestBody);
+      expect(response.status).toBe(403);
+      expect(response.body).toEqual({
+        message: "Forbidden access"
+      });
+    });
+
+    it("/books should add a book object to database if correct token is given", async () => {
       const requestBody = { title: "test title", author: "test author" };
       const responseBody = {
         id: expect.any(String),
@@ -53,6 +76,7 @@ describe("Route /books", () => {
       };
       const response = await request(app)
         .post(route())
+        .set("Authorization", "Bearer my-awesome-token")
         .send(requestBody);
       expect(response.status).toBe(201);
       expect(response.body).toEqual(responseBody);

@@ -1,5 +1,6 @@
 const express = require("express");
 const booksRouter = express.Router();
+const { simpleTokenVerification } = require("../middleware/auth");
 const { books } = require("../data/db.json");
 const { v4: uuidv4 } = require("uuid");
 
@@ -33,7 +34,7 @@ booksRouter.get("/", (req, res, next) => {
   }
 });
 
-booksRouter.post("/", (req, res, next) => {
+booksRouter.post("/", simpleTokenVerification, (req, res, next) => {
   try {
     const newBook = req.body;
     newBook.id = uuidv4();
