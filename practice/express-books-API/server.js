@@ -1,6 +1,12 @@
 const app = require("./app");
-const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+let port, message;
+if (process.env.NODE_ENV === "production") {
+  port = process.env.PORT;
+  message = "Server is running in production";
+} else {
+  port = 8080;
+  message = `Server is running on http://localhost:${port}`;
+}
+
+app.listen(port, () => console.log(message));
