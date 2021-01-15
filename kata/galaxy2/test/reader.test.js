@@ -1,4 +1,4 @@
-const { readText } = require("../app/reader");
+const { readText } = require("../src/reader");
 const fs = require("fs");
 
 const mockPoem = "Mock Poem written here.";
