@@ -1,3 +1,3 @@
-const { readText } = require("./src/reader");
+const { readText } = require("./src/utils/readText");
 
-readText("./app/input.txt");
+readText("./src/input.txt");

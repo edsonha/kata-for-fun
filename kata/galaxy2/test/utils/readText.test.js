@@ -1,7 +1,7 @@
-const { readText } = require("../src/reader");
+const { readText } = require("../../src/utils/readText");
 const fs = require("fs");
 
-const mockPoem = "Mock Poem written here.";
+const mockText = `Hello\nworld\n!`;
 
 describe("readText", () => {
   let readFileCallback;
@@ -17,10 +17,8 @@ describe("readText", () => {
     jest.restoreAllMocks();
   });
 
-  it("should print mock poem to console", () => {
-    const logSpy = jest.spyOn(console, "log");
-    readFileCallback(null, mockPoem);
-    expect(logSpy).toBeCalledWith(mockPoem);
+  it("should ensure that fs readFile function is called", () => {
+    readFileCallback(null, mockText);
     expect(fs.readFile).toBeCalledWith(
       "mockfile.txt",
       "utf8",
@@ -36,5 +34,14 @@ describe("readText", () => {
       "utf8",
       readFileCallback
     );
+  });
+
+  test.each([
+    ["", [""]],
+    ["Hello world\nBye world", ["Hello world", "Bye world"]],
+    [mockText, ["Hello", "world", "!"]],
+  ])("%o should return array of statement [%s]", (mockText, expectedOutput) => {
+    const response = readFileCallback(null, mockText);
+    expect(response).toEqual(expectedOutput);
   });
 });
