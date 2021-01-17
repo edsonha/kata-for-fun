@@ -1,7 +1,8 @@
-const { readText } = require("./src/utils/readText");
+const { readText, groupStatements } = require("./src/utils/index");
 
 const processInput = (fileDirectory) => {
-  const answer = readText(fileDirectory);
+  const statementsArray = readText(fileDirectory);
+  const answer = groupStatements(statementsArray);
   console.log(answer);
 };
 
