@@ -1,47 +1,34 @@
 const { readText } = require("../../src/utils/readText");
 const fs = require("fs");
 
-const mockText = `Hello\nworld\n!`;
-
 describe("readText", () => {
-  let readFileCallback;
-  beforeEach(() => {
-    jest.spyOn(fs, "readFile").mockImplementation((path, options, callback) => {
-      readFileCallback = callback;
-    });
+  it("should ensure that fs readFileSync function is called", () => {
+    jest.spyOn(fs, "readFileSync").mockImplementation((path, option) => "text");
 
     readText("mockfile.txt");
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
-  it("should ensure that fs readFile function is called", () => {
-    readFileCallback(null, mockText);
-    expect(fs.readFile).toBeCalledWith(
-      "mockfile.txt",
-      "utf8",
-      readFileCallback
-    );
+    expect(fs.readFileSync).toBeCalledWith("mockfile.txt", "utf8");
   });
 
   it("should throw error when read file failed", () => {
-    const mError = new Error("read file failed");
-    expect(() => readFileCallback(mError, null)).toThrowError(mError);
-    expect(fs.readFile).toBeCalledWith(
-      "mockfile.txt",
-      "utf8",
-      readFileCallback
-    );
+    const logSpy = jest.spyOn(console, "log");
+    jest.spyOn(fs, "readFileSync").mockImplementation((path) => {
+      throw new Error("error");
+    });
+
+    readText("mockfile.txt");
+    expect(logSpy).toBeCalledWith("error");
   });
 
   test.each([
     ["", [""]],
     ["Hello world\nBye world", ["Hello world", "Bye world"]],
-    [mockText, ["Hello", "world", "!"]],
+    [`Hello\nworld\n!`, ["Hello", "world", "!"]],
   ])("%o should return array of statement [%s]", (mockText, expectedOutput) => {
-    const response = readFileCallback(null, mockText);
+    jest
+      .spyOn(fs, "readFileSync")
+      .mockImplementation((path, option) => mockText);
+
+    const response = readText("mockfile.txt");
     expect(response).toEqual(expectedOutput);
   });
 });

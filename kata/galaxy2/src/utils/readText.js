@@ -1,10 +1,13 @@
 const fs = require("fs");
 
-const readText = (path) =>
-  fs.readFile(path, "utf8", (err, data) => {
-    if (err) throw err;
-    const arrayOfStatements = data.split("\n");
+const readText = (path) => {
+  try {
+    const statements = fs.readFileSync(path, "utf8");
+    const arrayOfStatements = statements.split("\n");
     return arrayOfStatements;
-  });
+  } catch (e) {
+    console.log(e.message);
+  }
+};
 
 module.exports = { readText };

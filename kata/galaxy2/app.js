@@ -1,3 +1,8 @@
 const { readText } = require("./src/utils/readText");
 
-readText("./src/input.txt");
+const processInput = (fileDirectory) => {
+  const answer = readText(fileDirectory);
+  console.log(answer);
+};
+
+processInput("./src/input.txt");
