@@ -4,7 +4,7 @@ const mockStatementsArray = [
   "glob is I",
   "glob glob Silver is 34 Credits",
   "how much is pish tegj glob glob ?",
-  "Z 100 Credit how",
+  "Z 100 Credits and how much will not be included",
 ];
 
 describe("groupStatements", () => {

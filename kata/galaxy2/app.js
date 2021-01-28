@@ -1,9 +1,22 @@
-const { readText, groupStatements } = require("./src/utils/index");
+const Dictionary = require("./src/Dictionary");
+const {
+  readText,
+  groupStatements,
+  processDefinitionStatements,
+} = require("./src/utils/index");
 
 const processInput = (fileDirectory) => {
   const statementsArray = readText(fileDirectory);
-  const answer = groupStatements(statementsArray);
-  console.log(answer);
+  const {
+    definitionStatements,
+    resourceStatements,
+    queryStatements,
+  } = groupStatements(statementsArray);
+  const definitionDictionary = processDefinitionStatements(
+    definitionStatements
+  );
+  const dictionary = new Dictionary(definitionDictionary);
+  dictionary.console();
 };
 
 processInput("./src/input.txt");
