@@ -3,6 +3,7 @@ const {
   readText,
   groupStatements,
   processDefinitionStatements,
+  processResourceStatements,
 } = require("./src/utils/index");
 
 const processInput = (fileDirectory) => {
@@ -12,11 +13,14 @@ const processInput = (fileDirectory) => {
     resourceStatements,
     queryStatements,
   } = groupStatements(statementsArray);
+
   const definitionDictionary = processDefinitionStatements(
     definitionStatements
   );
   const dictionary = new Dictionary(definitionDictionary);
-  dictionary.console();
+
+  const resourceInfo = processResourceStatements(resourceStatements);
+  // const shop = new Shop(resourceInfo);
 };
 
 processInput("./src/input.txt");
