@@ -19,8 +19,11 @@ const processInput = (fileDirectory) => {
   );
   const dictionary = new Dictionary(definitionDictionary);
 
-  const resourceInfo = processResourceStatements(resourceStatements);
-  // const shop = new Shop(resourceInfo);
+  const resourceInfo = processResourceStatements(
+    resourceStatements,
+    dictionary
+  );
+  const shop = new Shop(resourceInfo);
 };
 
 processInput("./src/input.txt");
